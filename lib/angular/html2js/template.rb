@@ -56,7 +56,13 @@ angular.module('%s', []).run(['$templateCache', function($templateCache) {
       end
 
       def cache_id
-        @cache_id.call(file, @scope)
+        url = @cache_id.call(file, @scope)
+        
+        unless config.url_rewriter.nil?
+          url = instance_exec url, &config.url_rewriter
+        end
+
+        url
       end
 
       def default_cache_id_proc

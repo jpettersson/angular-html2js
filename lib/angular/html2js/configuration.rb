@@ -20,6 +20,7 @@ module Angular
 
     class Configuration
       attr_accessor :module_name
+      attr_accessor :url_rewriter
 
       def cache_id(&block)
         if block
@@ -31,6 +32,10 @@ module Angular
 
       def reset!
         @cache_id = @module_name = nil
+      end
+
+      def rewrite_template_urls &blk
+        @url_rewriter = blk
       end
 
       def method_missing(config_name, *)
